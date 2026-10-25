@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://api.project-reverse.org/run/eyJpZCI6IjNmNmMzMDZmLTRhZTQtNDViZS04YzA4LTU5OGIy
+loadstring(game:HttpGet("https://api.project-reverse.org/run/eyJpZCI6IjNmNmMzMDZmLTRhZTQtNDViZS04YzA4LTU5OGIy"))()
 -- OverKill hub | Adopt Me Farm (WindUI Edition) | settings: the window
 local UserConfig = {
     Farm = {
