@@ -1,0 +1,136 @@
+-- LocalScript inside StarterPlayerScripts or StarterGui
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local StarterGui = game:GetService("StarterGui")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Configuration
+local DISCORD_LINK = "https://discord.gg/FhpU2jgq"
+local DISPLAY_TIME = 5 -- Seconds to stay on screen before auto-hiding
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "DiscordInviteGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Create Main Frame
+local frame = Instance.new("Frame")
+frame.Name = "MainFrame"
+frame.Size = UDim2.new(0, 380, 0, 180)
+frame.Position = UDim2.new(0.5, -190, 0.5, -90) -- Centered on screen
+frame.BackgroundColor3 = Color3.fromRGB(47, 49, 54) -- Discord Dark Theme Color
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 1 -- Start invisible for fade-in effect
+frame.Parent = screenGui
+
+-- Rounded Corners for Main Frame
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.Parent = frame
+
+-- Create Header Label
+local headerLabel = Instance.new("TextLabel")
+headerLabel.Size = UDim2.new(1, 0, 0, 35)
+headerLabel.Position = UDim2.new(0, 0, 0, 12)
+headerLabel.BackgroundTransparency = 1
+headerLabel.Text = "Join Our Discord!"
+headerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+headerLabel.TextSize = 22
+headerLabel.Font = Enum.Font.GothamBold
+headerLabel.TextTransparency = 1
+headerLabel.Parent = frame
+
+-- Create Subtext Label
+local subLabel = Instance.new("TextLabel")
+subLabel.Size = UDim2.new(1, 0, 0, 25)
+subLabel.Position = UDim2.new(0, 0, 0, 47)
+subLabel.BackgroundTransparency = 1
+subLabel.Text = "Be part of our community and get updates!"
+subLabel.TextColor3 = Color3.fromRGB(185, 187, 190)
+subLabel.TextSize = 13
+subLabel.Font = Enum.Font.Gotham
+subLabel.TextTransparency = 1
+subLabel.Parent = frame
+
+-- Create Copy Button
+local copyButton = Instance.new("TextButton")
+copyButton.Size = UDim2.new(0, 240, 0, 45)
+copyButton.Position = UDim2.new(0.5, -120, 0, 85)
+copyButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242) -- Discord Blurple Color
+copyButton.BorderSizePixel = 0
+copyButton.Text = "Copy Invite Link"
+copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+copyButton.TextSize = 16
+copyButton.Font = Enum.Font.GothamBold
+copyButton.TextTransparency = 1
+copyButton.BackgroundTransparency = 1 -- Starts transparent for fade-in
+copyButton.Parent = frame
+
+-- Rounded Corners for Button
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 8)
+buttonCorner.Parent = copyButton
+
+-- Create Status Notification Label
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(1, 0, 0, 25)
+statusLabel.Position = UDim2.new(0, 0, 0, 140)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Text = ""
+statusLabel.TextColor3 = Color3.fromRGB(67, 181, 129) -- Success Green
+statusLabel.TextSize = 13
+statusLabel.Font = Enum.Font.GothamSemibold
+statusLabel.TextTransparency = 1
+statusLabel.Parent = frame
+
+-- Function to set transparency for all elements
+local function tweenTransparency(targetTransparency, duration)
+	local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	
+	TweenService:Create(frame, tweenInfo, {BackgroundTransparency = targetTransparency}):Play()
+	TweenService:Create(headerLabel, tweenInfo, {TextTransparency = targetTransparency}):Play()
+	TweenService:Create(subLabel, tweenInfo, {TextTransparency = targetTransparency}):Play()
+	TweenService:Create(copyButton, tweenInfo, {BackgroundTransparency = targetTransparency}):Play()
+	TweenService:Create(copyButton, tweenInfo, {TextTransparency = targetTransparency}):Play()
+end
+
+-- Copy Button Click Logic
+local isCopied = false
+copyButton.MouseButton1Click:Connect(function()
+	if isCopied then return end
+	isCopied = true
+	
+	-- Copy to clipboard using Roblox's SetCore
+	pcall(function()
+		StarterGui:SetCore("CopyToClipboard", DISCORD_LINK)
+	end)
+	
+	-- Update UI Feedback
+	copyButton.Text = "Copied to Clipboard!"
+	copyButton.BackgroundColor3 = Color3.fromRGB(67, 181, 129) -- Green
+	statusLabel.Text = "Paste it into your browser to join!"
+	
+	-- Fade in status message
+	TweenService:Create(statusLabel, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+end)
+
+-- Animation Sequence
+task.spawn(function()
+	-- Fade In
+	tweenTransparency(0, 0.5)
+	
+	-- Display Duration
+	task.wait(DISPLAY_TIME)
+	
+	-- Fade Out
+	tweenTransparency(1, 0.5)
+	TweenService:Create(statusLabel, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
+	
+	-- Cleanup
+	task.wait(0.5)
+	screenGui:Destroy()
+end)
