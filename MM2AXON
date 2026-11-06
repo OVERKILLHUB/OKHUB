@@ -1,6 +1,6 @@
 --!nolint
 --!nocheck
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/OVERKILLHUB/OKHUB/refs/heads/main/join%20our%20discord"))()
 local UI_LIBRARY_URL = "https://raw.githubusercontent.com/OVERKILLHUB/OKHUB/refs/heads/main/MM2gui"
 
 local function loadInterfaceLibrary()
