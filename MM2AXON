@@ -1,7 +1,7 @@
 --!nolint
 --!nocheck
 
-local UI_LIBRARY_URL = "https://cdn.project-reverse.org/wave-ui.luau"
+local UI_LIBRARY_URL = "https://raw.githubusercontent.com/OVERKILLHUB/OKHUB/refs/heads/main/MM2gui"
 
 local function loadInterfaceLibrary()
 	local uiSource = game:HttpGet(UI_LIBRARY_URL)
